@@ -1,0 +1,31 @@
+services:
+  loki:
+    image: grafana/loki:3.4.4
+    container_name: loki
+    volumes:
+      - ./config/loki-config.yaml:/etc/loki/config.yaml
+    command: -config.file=/etc/loki/config.yaml
+    ports:
+      - "3100:3100"
+
+  promtail:
+    image: grafana/promtail:3.4.4
+    container_name: promtail
+    volumes:
+      - ./config/promtail-config.yaml:/etc/promtail/config.yaml
+      - /var/log:/var/log  # Adjust as needed for your host logs
+    command: -config.file=/etc/promtail/config.yaml
+
+  grafana:
+    image: grafana/grafana:12.0.2
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-storage:/var/lib/grafana
+
+volumes:
+  grafana-storage:
