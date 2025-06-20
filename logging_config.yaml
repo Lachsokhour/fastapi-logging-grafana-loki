@@ -1,0 +1,19 @@
+version: 1
+disable_existing_loggers: False
+
+formatters:
+  json:
+    format: '{"timestamp": "%(asctime)s", "level": "%(levelname)s", "message": "%(message)s", "module": "%(module)s"}'
+
+handlers:
+  file:
+    class: logging.handlers.TimedRotatingFileHandler
+    formatter: json
+    filename: logs/app.log
+    when: midnight
+    backupCount: 7
+    encoding: utf8
+
+root:
+  level: INFO
+  handlers: [file]

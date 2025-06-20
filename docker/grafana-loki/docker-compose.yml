@@ -13,7 +13,8 @@ services:
     container_name: promtail
     volumes:
       - ./config/promtail-config.yaml:/etc/promtail/config.yaml
-      - /var/log:/var/log  # Adjust as needed for your host logs
+      # - /var/log:/var/log  # Adjust as needed for your host logs
+      - ../../logs/app.log:/var/log/app.log
     command: -config.file=/etc/promtail/config.yaml
 
   grafana:
